@@ -19,7 +19,7 @@
   .upload-zone{border:1.5px dashed #c8b98a;border-radius:4px;padding:22px;text-align:center;cursor:pointer;transition:background .2s;background:#fdfaf4;margin-bottom:12px}
   .upload-zone:hover{background:#f7f1e3}
   .upload-zone input{display:none}
-  .uz-icon{font-size:24px;margin-bottom:5px}
+  .uz-icon{font-size:28px;margin-bottom:6px}
   .upload-zone p{font-size:13px;color:#666}
   .file-type-note{font-size:11px;color:#999;margin-top:2px}
   .file-name{font-size:13px;color:#1a7a3e;font-weight:600;margin-top:5px}
@@ -31,7 +31,7 @@
   .btn-gold{background:#c8a84b;color:#1a1a1a;font-weight:700}
   .btn-gold:hover{background:#b8963d}
   .btn-lg{padding:16px 32px;font-size:16px;width:100%}
-  .btn-sm{padding:8px 16px;font-size:13px}
+  .btn-sm{padding:7px 14px;font-size:12px}
   .comparison-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px;table-layout:fixed}
   .comparison-table th{background:#f4f1ec;padding:10px;text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:#666;border-bottom:1px solid #e0dcd4}
   .comparison-table td{padding:10px;border-bottom:1px solid #f0ece4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -77,25 +77,23 @@
   .hc-label{color:#666}.hc-val{font-weight:600;color:#1a1a1a}
   .section-intro{font-size:13px;color:#888;margin-bottom:16px;line-height:1.5}
   .tag-otr{display:inline-block;font-size:10px;background:#1a7a3e;color:#fff;padding:1px 6px;border-radius:2px;margin-left:4px;vertical-align:middle}
+  .tag-int{display:inline-block;font-size:10px;background:#c8a84b;color:#1a1a1a;padding:1px 6px;border-radius:2px;margin-left:4px;vertical-align:middle;font-weight:700}
   .chart-wrap{position:relative;width:100%;margin:16px 0}
   .chart-legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-size:12px;color:#555}
   .chart-legend span{display:flex;align-items:center;gap:5px}
   .chart-legend-sq{width:10px;height:10px;border-radius:2px;display:inline-block}
   .copy-btn-row{display:flex;gap:10px;margin-top:12px;align-items:center}
-  .paste-area{width:100%;height:100px;padding:10px 12px;border:1px solid #d0cbc0;border-radius:3px;font-size:12px;font-family:monospace;background:#fdfaf4;resize:vertical}
-  .paste-area:focus{outline:none;border-color:#c8a84b}
-  .step-box{background:#f4f1ec;border-radius:4px;padding:16px;margin-bottom:16px}
-  .step-box .step-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:8px;font-weight:600}
-  .step-box p{font-size:13px;color:#555;line-height:1.5}
-  .inline-status{font-size:13px;color:#888;font-style:italic;margin-left:10px}
+  .inline-status{font-size:13px;color:#888;font-style:italic}
   .inline-status.ok{color:#1a7a3e;font-style:normal;font-weight:600}
-  .inline-status.err{color:#c0392b}
+  .inline-status.err{color:#c0392b;font-style:normal}
   .ready-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ccc;margin-right:6px;vertical-align:middle}
   .ready-dot.on{background:#1a7a3e}
-  .how-it-works{background:#1a1a1a;color:#fff;padding:16px 24px;margin-bottom:28px;border-radius:4px;font-size:13px;line-height:1.8}
-  .how-it-works strong{color:#c8a84b}
-  .how-it-works ol{margin-left:18px;margin-top:8px}
-  .how-it-works li{margin-bottom:4px}
+  .ai-status{background:#f4f1ec;border-radius:4px;padding:14px 18px;margin-top:16px;font-size:13px;color:#666;display:none;align-items:center;gap:10px}
+  .ai-status.running{display:flex;color:#c8a84b}
+  .ai-status.done{display:flex;color:#1a7a3e}
+  .ai-status.error{display:flex;color:#c0392b}
+  .spinner{width:16px;height:16px;border:2px solid #e0dcd4;border-top-color:#c8a84b;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+  @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -105,19 +103,10 @@
     <div class="logo">OTR Solutions</div>
     <h1>Carrier Savings Pitch Builder</h1>
   </div>
-  <div style="font-size:12px;color:#aaa;text-align:right;">Fuel Card Sales Tool<br>v3.0</div>
+  <div style="font-size:12px;color:#aaa;text-align:right;">Fuel Card Sales Tool<br>v4.0 — Auto AI</div>
 </div>
 
 <div class="app-body">
-
-  <div class="how-it-works">
-    <strong>How this works:</strong> Upload your files, hit "Send to Claude," paste Claude's response back in, and the tool renders your comparison table, chart, and pitch email. The AI analysis runs through Claude chat — paste the result right back here.
-    <ol>
-      <li>Upload both files → click <strong>Send to Claude for Analysis ↗</strong></li>
-      <li>Claude responds with JSON in the chat window</li>
-      <li>Paste Claude's response into the box → click <strong>Load Results</strong></li>
-    </ol>
-  </div>
 
   <!-- SECTION 1 -->
   <div class="section-card">
@@ -126,15 +115,14 @@
       <h2>Fuel Transaction Upload &amp; Price Comparison</h2>
     </div>
     <div class="section-body">
-      <p class="section-intro">Upload the carrier's fuel transaction report and OTR's current pricing in any format. Images, CSV, Excel, PDF, TXT — all accepted.</p>
-
+      <p class="section-intro">Upload both files. AI runs the comparison automatically — no buttons to click.</p>
       <div class="upload-grid">
         <div>
           <div class="upload-zone" onclick="document.getElementById('txFile').click()">
             <input type="file" id="txFile" accept="*/*" onchange="handleFile(this,'tx')">
             <div class="uz-icon">📋</div>
             <p>Carrier Fuel Transactions</p>
-            <p class="file-type-note">Image, CSV, Excel, PDF, TXT — any format</p>
+            <p class="file-type-note">Image, CSV, Excel, TXT — any format</p>
             <div class="file-name" id="txFileName"></div>
           </div>
           <div style="font-size:12px;color:#888;margin-top:4px;"><span class="ready-dot" id="txDot"></span><span id="txStatus">No file loaded</span></div>
@@ -144,31 +132,19 @@
             <input type="file" id="otrFile" accept="*/*" onchange="handleFile(this,'otr')">
             <div class="uz-icon">💲</div>
             <p>OTR Pricing Data</p>
-            <p class="file-type-note">Image, CSV, Excel, PDF, TXT — any format</p>
+            <p class="file-type-note">Image, CSV, Excel, TXT — any format</p>
             <div class="file-name" id="otrFileName"></div>
           </div>
           <div style="font-size:12px;color:#888;margin-top:4px;"><span class="ready-dot" id="otrDot"></span><span id="otrStatus">No file loaded</span></div>
         </div>
       </div>
 
-      <div style="margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-        <button class="btn" id="sendCompareBtn" onclick="sendComparePrompt()" disabled>Send to Claude for Analysis ↗</button>
-        <span style="font-size:12px;color:#aaa;">Generates a prompt — copy it into Claude chat</span>
+      <div class="ai-status" id="compareAiStatus">
+        <div class="spinner"></div>
+        <span id="compareAiMsg">Running comparison...</span>
       </div>
 
-      <div id="comparePasteArea" style="display:none;margin-top:20px;">
-        <div class="step-box">
-          <div class="step-label">Step 2 — Paste Claude's JSON response here</div>
-          <p>Claude will return a JSON block. Paste the entire response and click Load.</p>
-        </div>
-        <textarea class="paste-area" id="comparePaste" placeholder="Paste Claude response here..."></textarea>
-        <div style="display:flex;gap:10px;margin-top:10px;align-items:center;">
-          <button class="btn btn-sm" onclick="loadComparison()">Load Results</button>
-          <span class="inline-status" id="loadCompareStatus"></span>
-        </div>
-      </div>
-
-      <div id="comparisonResults" style="display:none;margin-top:24px;">
+      <div id="comparisonResults" style="display:none;margin-top:20px;">
         <div class="summary-bar" id="summaryBar"></div>
         <div style="overflow-x:auto;">
           <table class="comparison-table">
@@ -196,18 +172,12 @@
       <h2>Transaction Fee Analysis — Hidden Costs</h2>
     </div>
     <div class="section-body">
-      <p class="section-intro">Send the transaction data to Claude to scan for processing fees and surcharges. OTR charges zero in-network transaction fees.</p>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-        <button class="btn btn-sm" id="sendFeeBtn" onclick="sendFeePrompt()" disabled>Send Fee Analysis to Claude ↗</button>
+      <p class="section-intro">Automatically scans the transaction report for processing fees and surcharges once the carrier file is uploaded. OTR charges zero in-network transaction fees.</p>
+      <div class="ai-status" id="feeAiStatus">
+        <div class="spinner"></div>
+        <span id="feeAiMsg">Scanning for fees...</span>
       </div>
-      <div id="feePasteArea" style="display:none;margin-top:16px;">
-        <textarea class="paste-area" id="feePaste" placeholder="Paste Claude's fee analysis response here..."></textarea>
-        <div style="display:flex;gap:10px;margin-top:10px;align-items:center;">
-          <button class="btn btn-sm" onclick="loadFees()">Load Fee Results</button>
-          <span class="inline-status" id="loadFeeStatus"></span>
-        </div>
-      </div>
-      <div id="feeResults" style="display:none;margin-top:20px;">
+      <div id="feeResults" style="display:none;margin-top:16px;">
         <div style="overflow-x:auto;">
           <table class="fee-table">
             <thead>
@@ -231,8 +201,8 @@
       <h2>Factoring Savings Calculator</h2>
     </div>
     <div class="section-body">
-      <p class="section-intro">Enter the carrier's current factoring details and OTR's rate to show side-by-side savings. Calculates instantly — no AI needed.</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;">
+      <p class="section-intro">Enter the carrier's factoring details. Calculates instantly — no AI needed.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;">
         <div class="input-row">
           <label>Last Month's Factoring Volume ($)</label>
           <input type="number" id="facVolume" placeholder="e.g. 85000" oninput="calcFactoring()">
@@ -246,6 +216,24 @@
           <input type="number" id="facOTR" placeholder="e.g. 2.5" step="0.1" oninput="calcFactoring()">
         </div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px;">
+        <div class="input-row" style="margin-bottom:0">
+          <label>Est. Monthly Gallons Purchased</label>
+          <input type="number" id="facGallons" placeholder="e.g. 12000" oninput="calcFactoring()">
+        </div>
+        <div class="input-row" style="margin-bottom:0">
+          <label>OTR Revenue per Gallon (¢) <span class="tag-int">INTERNAL</span></label>
+          <input type="number" id="facCPG" placeholder="e.g. 10" step="0.5" value="10" oninput="calcFactoring()">
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;margin-top:10px;">
+        <span style="font-size:11px;color:#888;align-self:center;margin-right:4px;">Tier presets:</span>
+        <button class="btn btn-sm" onclick="setTier(10)" style="background:#f4f1ec;color:#1a1a1a;border:1px solid #d0cbc0;">Tier 1 — 10¢</button>
+        <button class="btn btn-sm" onclick="setTier(8)" style="background:#f4f1ec;color:#1a1a1a;border:1px solid #d0cbc0;">Tier 2 — 8¢</button>
+        <button class="btn btn-sm" onclick="setTier(6)" style="background:#f4f1ec;color:#1a1a1a;border:1px solid #d0cbc0;">Tier 3 — 6¢</button>
+        <button class="btn btn-sm" onclick="setTier(4)" style="background:#f4f1ec;color:#1a1a1a;border:1px solid #d0cbc0;">Tier 4 — 4¢</button>
+      </div>
+
       <div class="calc-grid" id="facCalcArea" style="display:none;">
         <div class="calc-col">
           <h3>What They Paid</h3>
@@ -260,9 +248,10 @@
           <div style="margin-top:16px;font-size:13px;color:#888;" id="facOTRAnnual"></div>
         </div>
       </div>
+
       <div id="facSavingsBlock" style="display:none;">
         <div class="divider"></div>
-        <div style="display:flex;gap:40px;">
+        <div style="display:flex;gap:40px;flex-wrap:wrap;">
           <div>
             <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px;">Monthly Savings</div>
             <div style="font-size:28px;font-weight:700;color:#1a7a3e;" id="facMonthlySav">—</div>
@@ -271,6 +260,30 @@
             <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px;">Annual Savings</div>
             <div style="font-size:28px;font-weight:700;color:#1a7a3e;" id="facAnnualSav">—</div>
           </div>
+        </div>
+      </div>
+
+      <div id="otrRevenueBlock" style="display:none;margin-top:20px;">
+        <div class="divider"></div>
+        <div style="background:#1a1a1a;border-radius:4px;padding:20px 24px;">
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c8a84b;margin-bottom:16px;font-weight:700;">🔒 Internal — OTR Fuel Revenue from This Account</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;">
+            <div>
+              <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px;">Monthly Fuel Revenue</div>
+              <div style="font-size:24px;font-weight:700;color:#c8a84b;" id="otrMonthlyRev">—</div>
+              <div style="font-size:11px;color:#666;margin-top:3px;" id="otrRevSub"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px;">Annual Fuel Revenue</div>
+              <div style="font-size:24px;font-weight:700;color:#c8a84b;" id="otrAnnualRev">—</div>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px;">Rate Drop Cost (Monthly)</div>
+              <div style="font-size:24px;font-weight:700;color:#c0392b;" id="otrRateCost">—</div>
+              <div style="font-size:11px;color:#666;margin-top:3px;" id="otrRateCostSub"></div>
+            </div>
+          </div>
+          <div id="otrJustification" style="background:#111;border-radius:3px;padding:14px 16px;font-size:13px;line-height:1.6;color:#ccc;"></div>
         </div>
       </div>
     </div>
@@ -312,22 +325,14 @@
         </div>
         <div class="input-row">
           <label>Your Name</label>
-          <input type="text" id="yourName" placeholder="e.g. Juston">
+          <input type="text" id="yourName" placeholder="e.g. Juston" value="Juston">
         </div>
       </div>
-      <button class="btn btn-gold btn-lg" onclick="sendEmailPrompt()">Build My Pitch Email ↗</button>
-      <p style="font-size:12px;color:#aaa;margin-top:8px;">Generates a prompt — paste it into Claude, then paste the response below.</p>
+      <button class="btn btn-gold btn-lg" onclick="generateEmail()" id="emailBtn">Build My Pitch Email</button>
 
-      <div id="emailPasteArea" style="margin-top:20px;">
-        <div class="step-box">
-          <div class="step-label">Paste Claude's email + chart data response here</div>
-          <p>Claude will write the email and include a CHART_DATA block. Paste the full response and click Load.</p>
-        </div>
-        <textarea class="paste-area" id="emailPaste" placeholder="Paste Claude's email + chart data response here..." style="height:120px;"></textarea>
-        <div style="display:flex;gap:10px;margin-top:10px;align-items:center;">
-          <button class="btn btn-sm" onclick="loadEmail()">Load Email + Chart</button>
-          <span class="inline-status" id="loadEmailStatus"></span>
-        </div>
+      <div class="ai-status" id="emailAiStatus" style="margin-top:12px;">
+        <div class="spinner"></div>
+        <span id="emailAiMsg">Writing your email...</span>
       </div>
 
       <div id="emailResult" style="display:none;margin-top:24px;">
@@ -339,7 +344,7 @@
             <span><span class="chart-legend-sq" style="background:#c8a84b;"></span>OTR $/gal (loss)</span>
           </div>
           <div class="chart-wrap" id="chartWrap">
-            <canvas id="pitchChart" role="img" aria-label="Horizontal bar chart comparing carrier vs OTR fuel prices by location"></canvas>
+            <canvas id="pitchChart"></canvas>
           </div>
           <div id="chartNote" style="font-size:12px;color:#888;margin-top:4px;"></div>
         </div>
@@ -359,6 +364,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
+const API_KEY = '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';
+
 let state={
   tx:{text:null,isImage:false,b64:null,mime:null},
   otr:{text:null,isImage:false,b64:null,mime:null},
@@ -368,15 +375,28 @@ let state={
 function fmt(n){return isNaN(n)?'$0':'$'+Math.round(n).toLocaleString()}
 function fmtD(n,d=2){return isNaN(n)?'0.00':Number(n).toFixed(d)}
 
-function setSlotReady(slot,filename){
-  document.getElementById(slot+'Dot').classList.add('on');
-  document.getElementById(slot+'Status').textContent='Ready: '+filename;
-  checkBtns();
+function setStatus(id,cls,msg){
+  const el=document.getElementById(id);
+  el.className='ai-status '+cls;
+  const msgEl=el.querySelector('span')||document.getElementById(id+'Msg');
+  if(msgEl)msgEl.textContent=msg;
 }
-function checkBtns(){
-  const ok=!!(state.tx.text||state.tx.b64)&&!!(state.otr.text||state.otr.b64);
-  document.getElementById('sendCompareBtn').disabled=!ok;
-  document.getElementById('sendFeeBtn').disabled=!(state.tx.text||state.tx.b64);
+
+async function callClaude(userContent, system, maxTokens=2000){
+  const body={
+    model:'claude-sonnet-4-20250514',
+    max_tokens:maxTokens,
+    system,
+    messages:[{role:'user',content:userContent}]
+  };
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify(body)
+  });
+  const data=await res.json();
+  if(data.error)throw new Error(data.error.message);
+  return data.content[0].text;
 }
 
 function handleFile(input,slot){
@@ -389,7 +409,9 @@ function handleFile(input,slot){
     const r=new FileReader();
     r.onload=e=>{
       state[slot]={text:null,isImage:true,b64:e.target.result.split(',')[1],mime:file.type};
-      setSlotReady(slot,file.name);
+      document.getElementById(slot+'Dot').classList.add('on');
+      document.getElementById(slot+'Status').textContent='Ready: '+file.name;
+      tryAutoRun();
     };r.readAsDataURL(file);
   } else if(isBinary){
     const r=new FileReader();
@@ -398,85 +420,92 @@ function handleFile(input,slot){
         const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
         const ws=wb.Sheets[wb.SheetNames[0]];
         state[slot]={text:XLSX.utils.sheet_to_csv(ws),isImage:false,b64:null,mime:null};
-        setSlotReady(slot,file.name);
-      }catch(err){
-        state[slot]={text:'Parse error: '+err.message,isImage:false,b64:null,mime:null};
-        setSlotReady(slot,file.name+' (error)');
-      }
+      }catch(err){state[slot]={text:'Parse error',isImage:false,b64:null,mime:null};}
+      document.getElementById(slot+'Dot').classList.add('on');
+      document.getElementById(slot+'Status').textContent='Ready: '+file.name;
+      tryAutoRun();
     };r.readAsArrayBuffer(file);
   } else {
     const r=new FileReader();
     r.onload=e=>{
       state[slot]={text:e.target.result,isImage:false,b64:null,mime:null};
-      setSlotReady(slot,file.name);
+      document.getElementById(slot+'Dot').classList.add('on');
+      document.getElementById(slot+'Status').textContent='Ready: '+file.name;
+      tryAutoRun();
     };r.readAsText(file);
   }
 }
 
-function buildPromptBox(title,content){
-  const box=document.createElement('div');
-  box.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
-  box.innerHTML=`<div style="background:#fff;border-radius:6px;padding:24px;max-width:700px;width:100%;max-height:80vh;overflow:auto">
-    <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;color:#1a1a1a">${title}</div>
-    <p style="font-size:13px;color:#666;margin-bottom:12px">Copy this entire prompt and paste it into Claude chat.</p>
-    <textarea style="width:100%;height:200px;padding:12px;border:1px solid #ddd;border-radius:3px;font-size:12px;font-family:monospace;resize:vertical" id="promptBoxText">${content.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea>
-    <div style="display:flex;gap:10px;margin-top:12px">
-      <button onclick="copyPromptBox()" style="background:#1a1a1a;color:#fff;border:none;padding:10px 20px;border-radius:3px;cursor:pointer;font-size:13px">Copy Prompt</button>
-      <button onclick="this.closest('div[style]').remove()" style="background:#f4f1ec;color:#1a1a1a;border:1px solid #ddd;padding:10px 20px;border-radius:3px;cursor:pointer;font-size:13px">Close</button>
-      <span id="promptCopyConfirm" style="font-size:13px;color:#1a7a3e;align-self:center"></span>
-    </div>
-  </div>`;
-  document.body.appendChild(box);
+function tryAutoRun(){
+  const hasTx=!!(state.tx.text||state.tx.b64);
+  const hasOtr=!!(state.otr.text||state.otr.b64);
+  if(hasTx&&hasOtr) runComparison();
+  else if(hasTx) runFeeAnalysis();
 }
 
-function copyPromptBox(){
-  const txt=document.getElementById('promptBoxText').value;
-  navigator.clipboard.writeText(txt).then(()=>{
-    document.getElementById('promptCopyConfirm').textContent='Copied to clipboard';
-    setTimeout(()=>{if(document.getElementById('promptCopyConfirm'))document.getElementById('promptCopyConfirm').textContent=''},2000);
-  });
-}
-
-function sendComparePrompt(){
-  let prompt='FUEL COMPARISON ANALYSIS REQUEST\n\n';
-  if(state.tx.isImage){
-    prompt+='CARRIER TRANSACTIONS: This is an image file. Extract location names, gallons purchased, and price per gallon paid by the carrier from the image.\n[IMAGE DATA - paste this prompt into Claude and also attach the carrier transaction image]\n\n';
-  } else {
-    prompt+='CARRIER TRANSACTION DATA:\n'+state.tx.text.slice(0,5000)+'\n\n';
-  }
-  if(state.otr.isImage){
-    prompt+='OTR PRICING: This is an image file. Extract location names and OTR price per gallon from the image.\n[IMAGE DATA - also attach the OTR pricing image]\n\n';
-  } else {
-    prompt+='OTR PRICING DATA:\n'+state.otr.text.slice(0,3000)+'\n\n';
-  }
-  prompt+=`INSTRUCTIONS:
-1. From the OTR pricing data, extract all location names and their OTR price per gallon.
-2. From the carrier transaction data, extract each unique location with total gallons and average carrier price per gallon.
-3. Match locations by name (fuzzy match OK). If no OTR match, set otr_price to null.
+async function runComparison(){
+  setStatus('compareAiStatus','running','Analyzing fuel prices across locations...');
+  try{
+    const system='You are a fuel cost analyst. Return ONLY valid JSON, no markdown, no explanation.';
+    let content=[];
+    if(state.tx.isImage){
+      content.push({type:'image',source:{type:'base64',media_type:state.tx.mime,data:state.tx.b64}});
+      content.push({type:'text',text:'CARRIER TRANSACTIONS: shown in the image above.\n\n'});
+    } else {
+      content.push({type:'text',text:'CARRIER TRANSACTION DATA:\n'+state.tx.text.slice(0,5000)+'\n\n'});
+    }
+    if(state.otr.isImage){
+      content.push({type:'image',source:{type:'base64',media_type:state.otr.mime,data:state.otr.b64}});
+      content.push({type:'text',text:'OTR PRICING: shown in the image above.\n\n'});
+    } else {
+      content.push({type:'text',text:'OTR PRICING DATA:\n'+state.otr.text.slice(0,3000)+'\n\n'});
+    }
+    content.push({type:'text',text:`Instructions:
+1. From OTR pricing, extract all location names and OTR price per gallon.
+2. From carrier transactions, extract each unique location with total gallons and avg carrier price per gallon.
+3. Match locations by name (fuzzy OK). No match = otr_price null.
 4. diff = carrier_price - otr_price. result: "win" if diff>=0.02, "loss" if diff<=-0.02, "neutral" if within 2 cents, "no_data" if null.
-5. Return ONLY this JSON (no other text, no markdown fences):
-{"rows":[{"location":"Flying J Laredo","carrier_price":4.12,"otr_price":3.89,"diff":0.23,"gallons":450,"result":"win"}],"wins":5,"losses":2,"neutrals":1,"win_gallons":2100,"win_savings":487.50}`;
+5. Return ONLY this JSON:
+{"rows":[{"location":"Flying J Laredo","carrier_price":4.12,"otr_price":3.89,"diff":0.23,"gallons":450,"result":"win"}],"wins":5,"losses":2,"neutrals":1,"win_gallons":2100,"win_savings":487.50}`});
 
-  buildPromptBox('Fuel Comparison Prompt — Paste into Claude',prompt);
-  document.getElementById('comparePasteArea').style.display='block';
-}
-
-function sendFeePrompt(){
-  let prompt='TRANSACTION FEE ANALYSIS REQUEST\n\n';
-  if(state.tx.isImage){
-    prompt+='CARRIER TRANSACTIONS: image file — attach carrier transaction image and extract any fees.\n\n';
-  } else {
-    prompt+='CARRIER TRANSACTION DATA:\n'+state.tx.text.slice(0,5000)+'\n\n';
+    const raw=await callClaude(content,system,2000);
+    const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    state.comparison=parsed;state.fuelWinSavings=parsed.win_savings||0;
+    renderComparison(parsed);updateCombined();
+    setStatus('compareAiStatus','done','✓ Comparison complete — '+( parsed.wins||0)+' OTR wins found');
+    runFeeAnalysis();
+  }catch(e){
+    setStatus('compareAiStatus','error','Error: '+e.message);
   }
-  prompt+=`Scan for transaction fees, processing fees, surcharges, per-fill charges. Extract rows where fee > 0.
-Return ONLY this JSON (no markdown fences):
-{"rows":[{"location":"Pilot Amarillo","date":"2024-03-04","gallons":120,"fuel_cost":508.40,"tx_fee":3.50,"fee_per_gal":0.029}],"total_fees":87.50,"avg_fee_per_tx":5.83,"avg_fee_per_gal":0.031,"fee_savings_with_otr":87.50,"has_fee_data":true}`;
-
-  buildPromptBox('Fee Analysis Prompt — Paste into Claude',prompt);
-  document.getElementById('feePasteArea').style.display='block';
 }
 
-function sendEmailPrompt(){
+async function runFeeAnalysis(){
+  if(!(state.tx.text||state.tx.b64))return;
+  setStatus('feeAiStatus','running','Scanning for transaction fees...');
+  try{
+    const system='You are a fuel cost analyst. Return ONLY valid JSON.';
+    let content=[];
+    if(state.tx.isImage){
+      content.push({type:'image',source:{type:'base64',media_type:state.tx.mime,data:state.tx.b64}});
+      content.push({type:'text',text:'CARRIER TRANSACTIONS: shown in image above.\n\n'});
+    } else {
+      content.push({type:'text',text:'CARRIER TRANSACTIONS:\n'+state.tx.text.slice(0,5000)+'\n\n'});
+    }
+    content.push({type:'text',text:`Scan for transaction fees, processing fees, surcharges. Extract rows with fee>0.
+Return ONLY:
+{"rows":[{"location":"Pilot Amarillo","date":"2024-03-04","gallons":120,"fuel_cost":508.40,"tx_fee":3.50,"fee_per_gal":0.029}],"total_fees":87.50,"avg_fee_per_tx":5.83,"avg_fee_per_gal":0.031,"fee_savings_with_otr":87.50,"has_fee_data":true}`});
+
+    const raw=await callClaude(content,system,1500);
+    const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    state.feeAnalysis=parsed;state.feeMonthly=parsed.total_fees||0;
+    renderFeeAnalysis(parsed);updateCombined();
+    setStatus('feeAiStatus','done',parsed.has_fee_data?'✓ Found $'+fmtD(parsed.total_fees)+' in transaction fees':'✓ No transaction fees detected');
+  }catch(e){
+    setStatus('feeAiStatus','error','Error: '+e.message);
+  }
+}
+
+async function generateEmail(){
   const carrierName=document.getElementById('carrierName').value||'there';
   const yourName=document.getElementById('yourName').value||'Juston';
   const fuel=state.fuelWinSavings||0,fees=state.feeMonthly||0,fac=state.facMonthly||0,total=fuel+fees+fac;
@@ -485,108 +514,50 @@ function sendEmailPrompt(){
   const comp=state.comparison;
   const winLocs=comp?comp.rows.filter(r=>r.result==='win').slice(0,3).map(r=>r.location).join(', '):'';
 
-  const prompt=`PITCH EMAIL + CHART DATA REQUEST
+  document.getElementById('emailBtn').disabled=true;
+  setStatus('emailAiStatus','running','Writing your pitch email...');
 
-Carrier: ${carrierName}
+  try{
+    const system='You write short, direct outreach emails for a fuel card salesperson at OTR Solutions. Plain spoken, no exclamation points, no corporate language, account manager tone. Under 150 words.';
+    const prompt=`Write a carrier outreach email.
+
+Contact: ${carrierName}
 Sender: ${yourName}, OTR Solutions
 Total monthly savings: ${fmt(total)} | Annual: ${fmt(total*12)}
 Fuel savings: ${fmt(fuel)} | Fee savings: ${fmt(fees)} | Factoring savings: ${fmt(fac)}
 ${winLocs?'OTR win locations: '+winLocs:''}
 ${curRate&&otrRate?'Factoring: their rate '+curRate+'% vs OTR '+otrRate+'%':''}
 
-TASK 1 — Write a carrier outreach email:
-- Open with total monthly savings number
-- Reference specific win locations
-- Mention factoring rate comparison if rates provided
-- Mention $0 transaction fee if fee savings > 0
-- One low-pressure CTA (10-15 min call)
-- No exclamation points, no corporate language, plain spoken, account manager tone
-- Under 150 words
-- Subject line first as: Subject: [subject]
+Requirements: open with total monthly savings, reference win locations, mention factoring comparison if provided, mention $0 tx fee if fee savings > 0, one low-pressure CTA (10-15 min call), no exclamation points, under 150 words, subject line first as: Subject: [subject]`;
 
-TASK 2 — After the email, output this exact line with chart JSON:
-CHART_DATA:{"rows":[{"location":"Flying J Laredo","carrier_price":4.12,"otr_price":3.89,"result":"win"},{"location":"Pilot Memphis","carrier_price":3.75,"otr_price":3.95,"result":"loss"}]}
-
-Use actual location data from the comparison if available.`;
-
-  buildPromptBox('Pitch Email Prompt — Paste into Claude',prompt);
-  document.getElementById('emailPasteArea').style.display='block';
-}
-
-function extractJSON(text){
-  const match=text.match(/\{[\s\S]*\}/);
-  if(match)return JSON.parse(match[0]);
-  throw new Error('No JSON found in response');
-}
-
-function loadComparison(){
-  try{
-    const parsed=extractJSON(document.getElementById('comparePaste').value);
-    state.comparison=parsed;state.fuelWinSavings=parsed.win_savings||0;
-    renderComparison(parsed);updateCombined();
-    document.getElementById('loadCompareStatus').textContent='Loaded.';
-    document.getElementById('loadCompareStatus').className='inline-status ok';
-  }catch(e){
-    document.getElementById('loadCompareStatus').textContent='Error: '+e.message;
-    document.getElementById('loadCompareStatus').className='inline-status err';
-  }
-}
-
-function loadFees(){
-  try{
-    const parsed=extractJSON(document.getElementById('feePaste').value);
-    state.feeAnalysis=parsed;state.feeMonthly=parsed.total_fees||0;
-    renderFeeAnalysis(parsed);updateCombined();
-    document.getElementById('loadFeeStatus').textContent='Loaded.';
-    document.getElementById('loadFeeStatus').className='inline-status ok';
-  }catch(e){
-    document.getElementById('loadFeeStatus').textContent='Error: '+e.message;
-    document.getElementById('loadFeeStatus').className='inline-status err';
-  }
-}
-
-function loadEmail(){
-  try{
-    const raw=document.getElementById('emailPaste').value;
-    const chartMatch=raw.match(/CHART_DATA:(\{[\s\S]*?\})\s*$/m)||raw.match(/CHART_DATA:(\{[\s\S]*\})/);
-    let emailText=raw;
-    let chartData=null;
-    if(chartMatch){
-      chartData=JSON.parse(chartMatch[1]);
-      emailText=raw.substring(0,raw.indexOf('CHART_DATA:')).trim();
-    } else if(state.comparison){
-      chartData={rows:state.comparison.rows.filter(r=>r.otr_price!=null)};
-    }
-    document.getElementById('emailText').value=emailText;
-    if(chartData)buildChart(chartData.rows);
+    const raw=await callClaude([{type:'text',text:prompt}],system,600);
+    document.getElementById('emailText').value=raw.trim();
+    if(comp)buildChart(comp.rows.filter(r=>r.otr_price!=null));
     document.getElementById('emailResult').style.display='block';
-    document.getElementById('loadEmailStatus').textContent='Loaded.';
-    document.getElementById('loadEmailStatus').className='inline-status ok';
+    setStatus('emailAiStatus','done','✓ Email ready');
   }catch(e){
-    document.getElementById('loadEmailStatus').textContent='Error: '+e.message;
-    document.getElementById('loadEmailStatus').className='inline-status err';
+    setStatus('emailAiStatus','error','Error: '+e.message);
   }
+  document.getElementById('emailBtn').disabled=false;
 }
 
 function buildChart(rows){
   if(!rows||!rows.length){document.getElementById('chartSection').style.display='none';return;}
-  const filtered=rows.filter(r=>r.otr_price!=null);
-  if(!filtered.length){document.getElementById('chartSection').style.display='none';return;}
-  const labels=filtered.map(r=>{let l=r.location||'';return l.length>20?l.substring(0,18)+'…':l;});
-  const carrier=filtered.map(r=>parseFloat(fmtD(r.carrier_price)));
-  const otr=filtered.map(r=>parseFloat(fmtD(r.otr_price)));
-  const barH=Math.max(260,filtered.length*52+80);
+  const labels=rows.map(r=>{let l=r.location||'';return l.length>20?l.substring(0,18)+'…':l;});
+  const carrier=rows.map(r=>parseFloat(fmtD(r.carrier_price)));
+  const otr=rows.map(r=>parseFloat(fmtD(r.otr_price)));
+  const barH=Math.max(260,rows.length*52+80);
   document.getElementById('chartWrap').style.height=barH+'px';
-  const wins=filtered.filter(r=>r.result==='win').length;
-  const losses=filtered.filter(r=>r.result==='loss').length;
-  document.getElementById('chartNote').textContent=`OTR cheaper at ${wins} of ${filtered.length} locations. ${losses} location${losses!==1?'s':''} where carrier currently has a better rate.`;
+  const wins=rows.filter(r=>r.result==='win').length;
+  const losses=rows.filter(r=>r.result==='loss').length;
+  document.getElementById('chartNote').textContent=`OTR cheaper at ${wins} of ${rows.length} locations. ${losses} location${losses!==1?'s':''} where carrier currently has a better rate.`;
   if(state.pitchChart)state.pitchChart.destroy();
   const minV=Math.max(0,Math.min(...carrier,...otr)-0.2);
   state.pitchChart=new Chart(document.getElementById('pitchChart'),{
     type:'bar',
     data:{labels,datasets:[
       {label:'Carrier $/gal',data:carrier,backgroundColor:'rgba(192,57,43,0.8)',borderRadius:2,borderSkipped:false},
-      {label:'OTR $/gal',data:otr,backgroundColor:filtered.map(r=>r.result==='win'?'rgba(26,122,62,0.85)':'rgba(200,168,75,0.85)'),borderRadius:2,borderSkipped:false}
+      {label:'OTR $/gal',data:otr,backgroundColor:rows.map(r=>r.result==='win'?'rgba(26,122,62,0.85)':'rgba(200,168,75,0.85)'),borderRadius:2,borderSkipped:false}
     ]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' $'+ctx.parsed.x.toFixed(2)+'/gal'}}},
@@ -635,6 +606,10 @@ function renderFeeAnalysis(data){
   document.getElementById('feeResults').style.display='block';
 }
 
+function setTier(cents){
+  document.getElementById('facCPG').value=cents;calcFactoring();
+}
+
 function calcFactoring(){
   const vol=parseFloat(document.getElementById('facVolume').value);
   const cur=parseFloat(document.getElementById('facCurrent').value);
@@ -642,6 +617,7 @@ function calcFactoring(){
   if(isNaN(vol)||isNaN(cur)||isNaN(otr)){
     document.getElementById('facCalcArea').style.display='none';
     document.getElementById('facSavingsBlock').style.display='none';
+    document.getElementById('otrRevenueBlock').style.display='none';
     state.facMonthly=0;updateCombined();return;
   }
   const curFee=vol*(cur/100),otrFee=vol*(otr/100),monthly=curFee-otrFee;
@@ -656,6 +632,26 @@ function calcFactoring(){
   document.getElementById('facCalcArea').style.display='grid';
   document.getElementById('facSavingsBlock').style.display='block';
   state.facMonthly=monthly;updateCombined();
+
+  const gallons=parseFloat(document.getElementById('facGallons').value);
+  const cpg=parseFloat(document.getElementById('facCPG').value);
+  if(!isNaN(gallons)&&gallons>0&&!isNaN(cpg)&&cpg>0){
+    const monthlyRev=gallons*(cpg/100),annualRev=monthlyRev*12,net=monthlyRev-monthly;
+    document.getElementById('otrMonthlyRev').textContent=fmt(monthlyRev);
+    document.getElementById('otrRevSub').textContent=Number(gallons).toLocaleString()+' gal × '+cpg+'¢';
+    document.getElementById('otrAnnualRev').textContent=fmt(annualRev);
+    document.getElementById('otrRateCost').textContent=fmt(monthly);
+    document.getElementById('otrRateCostSub').textContent='Factoring revenue given up';
+    const just=net>0
+      ?`✅ Fuel revenue (${fmt(monthlyRev)}/mo) covers the rate reduction (${fmt(monthly)}/mo). Net OTR gain: <strong style="color:#c8a84b">${fmt(net)}/month</strong>. You have room to move on rate.`
+      :net>-500
+      ?`⚠️ Fuel revenue (${fmt(monthlyRev)}/mo) almost covers the rate reduction (${fmt(monthly)}/mo). Gap is ${fmt(Math.abs(net))}/mo — weigh account retention value before committing.`
+      :`🔴 Fuel revenue (${fmt(monthlyRev)}/mo) does not cover the rate reduction (${fmt(monthly)}/mo). Gap: ${fmt(Math.abs(net))}/mo. Push for more gallon volume or negotiate a smaller rate drop.`;
+    document.getElementById('otrJustification').innerHTML=just;
+    document.getElementById('otrRevenueBlock').style.display='block';
+  } else {
+    document.getElementById('otrRevenueBlock').style.display='none';
+  }
 }
 
 function updateCombined(){
